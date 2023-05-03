@@ -152,6 +152,8 @@ class BhagvadGita {
             Chapter : ${chapterNo} - Verse : ${verseNo} not found
           `;
 		}
+		const detailsView = document.getElementById('details-view');
+		detailsView.scrollIntoView(top, { behavior: 'smooth', block: 'start' });
 	}
 
 	async getAuthToken() {
@@ -210,6 +212,8 @@ class BhagvadGita {
                 <p class="chapter-total">Total Verses : ${chapter.verses_count}</p>
        
         `;
+		const detailsView = document.getElementById('details-view');
+		detailsView.scrollIntoView(top, { behavior: 'smooth', block: 'start' });
 	}
 }
 

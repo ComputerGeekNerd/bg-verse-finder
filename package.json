@@ -1,0 +1,29 @@
+{
+  "name": "bg-verse-finder",
+  "version": "1.0.0",
+  "description": "A quick and handy verse finder for Srimad Bhagavad Gita - the divine song of the Lord of the universe - Sri Jagannatha",
+  "main": "gulpfile.js",
+  "scripts": {
+    "scss": "gulp sass",
+    "watch": "gulp watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ComputerGeekNerd/bg-verse-finder.git"
+  },
+  "keywords": [
+    "bhagavad-gita"
+  ],
+  "author": "Raksha Aasish",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ComputerGeekNerd/bg-verse-finder/issues"
+  },
+  "homepage": "https://github.com/ComputerGeekNerd/bg-verse-finder#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.62.1"
+  }
+}

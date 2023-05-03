@@ -13,19 +13,21 @@
 		/>
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="./stylesheet/style.css" />
+		<script src="./js/smoothscroll.js" defer></script>
 		<script src="./js/utils.js" defer></script>
 		<script src="./js/index.js" defer></script>
 	</head>
 	<body>
-		<h1>Jai Sri Krsna! Jai Sri Ram!</h1>
-		<img
-			id="sri-krsna-img"
-			src="./media/header2.jpg"
-			alt="sri-krsna-arjuna"
-		/>
+		<div class="cover-img">
+			<img
+				id="sri-krsna-img"
+				src="./media/header2.jpg"
+				alt="sri-krsna-arjuna"
+			/>
+		</div>
 		<div class="modal flex">
 			<div class="form-modal"></div>
-			<div class="chapter-content flex">
+			<div class="chapter-content flex" id="details-view">
 				<img class="loading" src="./media/loader.gif" alt="loader" />
 			</div>
 		</div>

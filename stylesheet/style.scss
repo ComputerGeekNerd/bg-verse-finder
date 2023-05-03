@@ -16,7 +16,7 @@
 		position: relative;
 		width: 360px;
 		height: auto;
-		margin-top: 4em;
+		margin-top: 1em;
 		left: 50%;
 		display: inline-block;
 		transform: translateX(-50%);
@@ -367,13 +367,22 @@
 		margin-top: 0rem;
 		// position: relative;
 	}
-	@media all and (min-width: 1024px) and (max-width: 1179px) {
-		margin-top: -15rem;
-		height: 45vh;
+	
+	@media all and (min-width: 1181px) {
+		margin-top: -3rem;
+	}
+
+	@media all and (min-width: 1024px) and (max-width: 1180px) {
+		margin-top: 23rem;
+		height: 65vh;
+	}
+
+	@media all and (min-width: 769px) and (max-width: 1023px) {
+		margin-top: 23rem;
 	}
 
 	@media all and (max-width: 768px) {
-		margin-top: 4.5rem;
+		margin-top: 20rem;
 		width: 90%;
 		height: 65vh;
 	}
@@ -401,7 +410,31 @@
 .loading {
 	display: none;
 	position: absolute;
-	top: 50%;
+	z-index: 30;
+	// top: 50%;
 	left: 50%;
 	transform: translate(-50%, 50%);
+}
+
+.cover-img {
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+}
+
+#sri-krsna-img {
+	@media only screen and (max-width: 545px) {
+		width: 320px !important;
+		margin-top: 16px;
+	}
+
+	@media only screen and (min-width: 546px) and (max-width: 768px) {
+		width: 440px !important;
+		margin-top: 36px;
+	}
+
+	@media only screen and (min-width: 769px){
+		width: 540px !important;
+		margin-top: 36px;
+	}
 }
