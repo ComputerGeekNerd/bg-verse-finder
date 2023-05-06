@@ -75,11 +75,17 @@ class BhagvadGita {
 	}
 
 	async getValidVerseNumbers(selectedChapter) {
-		let tokenPromise = await this.getAuthToken();
-		tokenPromise = await tokenPromise.json();
-		let token = tokenPromise.access_token;
+		const options = {
+			method: 'GET',
+			headers: {
+				'X-RapidAPI-Key':
+					'cf6b7264b6msh53519832a4e8588p192183jsneb8d357e17c5',
+				'X-RapidAPI-Host': 'bhagavad-gita3.p.rapidapi.com'
+			}
+		};
 		let chapter = await fetch(
-			`https://bhagavadgita.io/api/v1/chapters/${selectedChapter}?access_token=${token}`
+			`https://bhagavad-gita3.p.rapidapi.com/v2/chapters/${selectedChapter}/`,
+			options
 		);
 		chapter = await chapter.json();
 		const chapterVerseNumber = chapter.verses_count;
@@ -103,18 +109,34 @@ class BhagvadGita {
 		);
 	}
 
+	getVerseTranslation(translations) {
+		console.log('transl: ', translations);
+		const res = translations.filter(
+			(translation) =>
+				translation.language === 'english' &&
+				translation.author_name === 'Dr. S. Sankaranarayan'
+		);
+		if (res.length > 0) return res[0].description;
+		return '';
+	}
+
 	async handleClickOnVerseSubmitBtn(e) {
 		this.moveLayoutToLeftSide();
 		this.contentContainer_DOM.innerHTML = `
             <img class="loading" src="./media/loader.gif" alt="loader">
-      `;
+		`;
 		const chapterNo = document.querySelector('.verse-form .selected')
 			.dataset.value;
 		const verseNo = document.querySelector('.verse-number').value;
 
-		let tokenPromise = await this.getAuthToken();
-		tokenPromise = await tokenPromise.json();
-		let token = tokenPromise.access_token;
+		const options = {
+			method: 'GET',
+			headers: {
+				'X-RapidAPI-Key':
+					'cf6b7264b6msh53519832a4e8588p192183jsneb8d357e17c5',
+				'X-RapidAPI-Host': 'bhagavad-gita3.p.rapidapi.com'
+			}
+		};
 
 		if (
 			+verseNo < 1 ||
@@ -125,24 +147,25 @@ class BhagvadGita {
             <div>
                 Invalid Verse Number
             </div>
-          `;
+        `;
 			return;
 		}
 
 		document.querySelector('.loading').style.display = 'block';
 		let getVerse = await fetch(
-			`https://bhagavadgita.io/api/v1/chapters/${chapterNo}/verses/${verseNo}?access_token=${token}`
+			`https://bhagavad-gita3.p.rapidapi.com/v2/chapters/${chapterNo}/verses/${verseNo}/`,
+			options
 		);
 		document.querySelector('.loading').style.display = 'none';
 		getVerse = await getVerse.json();
-		this.clearVerseForm();
 
 		if (getVerse.chapter_number) {
+			const desc = this.getVerseTranslation(getVerse.translations);
 			this.contentContainer_DOM.innerHTML = `
             <h4 class="verse-title">Chapter : ${getVerse.chapter_number} - Verse: ${getVerse.verse_number}</h4>
             <h2 class="verse">${getVerse.text}<h2>
             <h4 class="verse-transliteration">${getVerse.transliteration}</h4>   
-            <h3 class="verse-meaning">${getVerse.meaning}</h3>
+            <h3 class="verse-meaning">${desc}</h3>
             <p class="verse-word-meaning">
             <strong>Word Meanings </strong>: ${getVerse.word_meanings}
             </p>
@@ -150,24 +173,11 @@ class BhagvadGita {
 		} else {
 			this.contentContainer_DOM.innerHTML = `
             Chapter : ${chapterNo} - Verse : ${verseNo} not found
-          `;
+		`;
 		}
+		this.clearVerseForm();
 		const detailsView = document.getElementById('details-view');
 		detailsView.scrollIntoView(top, { behavior: 'smooth', block: 'start' });
-	}
-
-	async getAuthToken() {
-		const url = 'https://bhagavadgita.io/auth/oauth/token';
-		const token = await fetch('https://bhagavadgita.io/auth/oauth/token', {
-			body: 'client_id=dl2DICua80k5iEzBvXeAN20vtTMjkgLnpdFZ4anj&client_secret=48Fy9kIMZ3NKaWalUusMW3yPj7fg7aRXA6RGefk3lvwCWiFh6o&grant_type=client_credentials&scope=verse%20chapter',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			method: 'POST',
-			json: true
-		});
-		return token;
 	}
 
 	moveLayoutToLeftSide() {
@@ -181,10 +191,15 @@ class BhagvadGita {
 
 	async handleClickOnChapterSubmitBtn(e) {
 		this.moveLayoutToLeftSide();
-		const tokenPromise = await this.getAuthToken().then((data) =>
-			data.json()
-		);
-		const token = tokenPromise.access_token;
+
+		const options = {
+			method: 'GET',
+			headers: {
+				'X-RapidAPI-Key':
+					'cf6b7264b6msh53519832a4e8588p192183jsneb8d357e17c5',
+				'X-RapidAPI-Host': 'bhagavad-gita3.p.rapidapi.com'
+			}
+		};
 
 		const selectedChapter = e.target.querySelector(
 			'.chapter-form .selected'
@@ -195,7 +210,8 @@ class BhagvadGita {
 
 		document.querySelector('.loading').style.display = 'block';
 		const fetchChapterDetails = await fetch(
-			`https://bhagavadgita.io/api/v1/chapters/${selectedChapter}?access_token=${token}`
+			`https://bhagavad-gita3.p.rapidapi.com/v2/chapters/${selectedChapter}/`,
+			options
 		).then((data) => data.json());
 		document.querySelector('.loading').style.display = 'none';
 
@@ -208,9 +224,8 @@ class BhagvadGita {
                 <p class="chapter-summary">
                 ${chapter.chapter_summary}
                 </p>
-            
+
                 <p class="chapter-total">Total Verses : ${chapter.verses_count}</p>
-       
         `;
 		const detailsView = document.getElementById('details-view');
 		detailsView.scrollIntoView(top, { behavior: 'smooth', block: 'start' });
